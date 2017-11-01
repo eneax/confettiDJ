@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>confettiDJ</title>
+    <!-- paper.min.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.22/paper.min.js"></script>
+    <!-- howler.min.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.core.min.js"></script>
+    <!-- confettiDJ.css -->
+    <link rel="stylesheet" type="text/css" href="confettiDJ.css">
+    <!-- font-awesome.min.css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script type="text/paperscript" canvas="myCanvas">
+
+      var keyData = {
+      	q: {
+      		sound: new Howl({
+        		src: ['sounds/bubbles.mp3']
+      		}),
+      		color: '#3494E6'
+      	},
+      	w: {
+      		sound: new Howl({
+        		src: ['sounds/clay.mp3']
+      		}),
+      		color: '#EC6EAD'
+      	},
+      	e: {
+      		sound: new Howl({
+        		src: ['sounds/confetti.mp3']
+      		}),
+      		color: '#FF8C00'
+      	},
+      	r: {
+      		sound: new Howl({
+        		src: ['sounds/corona.mp3']
+      		}),
+      		color: '#1cefff'
+      	},
+      		t: {
+      		sound: new Howl({
+        		src: ['sounds/dotted-spiral.mp3']
+      		}),
+      		color: '#FF0080'
+      	},
+      	y: {
+      		sound: new Howl({
+        		src: ['sounds/flash-1.mp3']
+      		}),
+      		color: '#f7b733'
+      	},
+      	u: {
+      		sound: new Howl({
+        		src: ['sounds/flash-2.mp3']
+      		}),
+      		color: '#ff5e62'
+      	},
+      	i: {
+      		sound: new Howl({
+        		src: ['sounds/flash-3.mp3']
+      		}),
+      		color: '#43C6AC'
+      	},
+      	o: {
+      		sound: new Howl({
+      			src: ['sounds/glimmer.mp3']
+      		}),
+      		color: '#fffc00'
+      	},
+      	p: {
+      		sound: new Howl({
+        		src: ['sounds/moon.mp3']
+      		}),
+      		color: '#237A57'
+      	},
+      	a: {
+      		sound: new Howl({
+        		src: ['sounds/pinwheel.mp3']
+      		}),
+      		color: '#43C6AC'
+      	},
+      	s: {
+      		sound: new Howl({
+        		src: ['sounds/piston-1.mp3']
+      		}),
+      		color: '#4568DC'
+      	},
+      		d: {
+      		sound: new Howl({
+        		src: ['sounds/piston-2.mp3']
+      		}),
+      		color: '#B06AB3'
+      	},
+      	f: {
+      		sound: new Howl({
+        		src: ['sounds/prism-1.mp3']
+      		}),
+      		color: '#fc4a1a'
+      	},
+      	g: {
+      		sound: new Howl({
+        		src: ['sounds/prism-2.mp3']
+      		}),
+      		color: '#f7b733'
+      	},
+      	h: {
+      		sound: new Howl({
+        		src: ['sounds/prism-3.mp3']
+      		}),
+      		color: '#CB356B'
+      	},
+      	j: {
+      		sound: new Howl({
+        		src: ['sounds/splits.mp3']
+      		}),
+      		color: '#38ef7d'
+      	},
+      	k: {
+      		sound: new Howl({
+        		src: ['sounds/squiggle.mp3']
+      		}),
+      		color: '#11998e'
+      	},
+      	l: {
+      		sound: new Howl({
+        		src: ['sounds/strike.mp3']
+      		}),
+      		color: '#56CCF2'
+      	},
+      	z: {
+      		sound: new Howl({
+        		src: ['sounds/suspension.mp3']
+      		}),
+      		color: '#ff00cc'
+      	},
+      	x: {
+      		sound: new Howl({
+        		src: ['sounds/timer.mp3']
+      		}),
+      		color: '#52c234'
+      	},
+      	c: {
+      		sound: new Howl({
+        		src: ['sounds/ufo.mp3']
+      		}),
+      		color: '#0f9b0f'
+      	},
+      	v: {
+      		sound: new Howl({
+        		src: ['sounds/veil.mp3']
+      		}),
+      		color: '#30E8BF'
+      	},
+      	b: {
+      		sound: new Howl({
+        		src: ['sounds/wipe.mp3']
+      		}),
+      		color: '#a80077'
+      	},
+      	n: {
+      		sound: new Howl({
+      			src: ['sounds/zig-zag.mp3']
+      		}),
+      		color: '#7F00FF'
+      	},
+      	m: {
+      		sound: new Howl({
+        		src: ['sounds/moon.mp3']
+      		}),
+      		color: '#2C7744'
+      	}
+      }
+
+      var rects = [];
+
+      function onKeyDown(event) {
+        if (keyData[event.key]) {
+          var maxSize = new Point(view.size.width, view.size.height);
+          var randomPoint = Point.random();
+          var point = randomPoint * maxSize;
+          var newRect = new Path.Rectangle(450, point);
+          newRect.fillColor = keyData[event.key].color;
+          keyData[event.key].sound.play();
+          rects.push(newRect);
+        }
+      }
+
+      function onFrame(event) {
+        for(var i = 0; i < rects.length; i++) {
+          rects[i].scale(.99);
+          rects[i].fillColor.hue += 1;
+          rects[i].rotate(4);
+          if(rects[i].area < 1) {
+          	rects[i].remove();
+            rects.splice(i, 1);
+          }
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas" resize></canvas>
+    <div id="hint">
+      <p class="message">Press any key <i class="fa fa-keyboard-o" aria-hidden="true"></i> from A to Z and turn up the volume <i class="fa fa-volume-up" aria-hidden="true"></i></p>
+    </div>
+  </body>
+</html>
