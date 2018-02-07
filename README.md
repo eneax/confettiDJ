@@ -9,7 +9,7 @@ and the sounds from the open source project Neuronal Synchrony.
 Press any key, from A to Z, to create jingles and rotating confetti.
 
 
-# NOTE
+# Note
 
 To get rid of the Cross Origin errors in the console, 
 you'll need to run a local HTTP server from your project's directory,
